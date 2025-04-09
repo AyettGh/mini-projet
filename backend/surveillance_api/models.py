@@ -1,8 +1,8 @@
 from django.db import models
 
 class Formula(models.Model):
-    formula = models.CharField(max_length=255, default="(courses + td + tp * 0.75) * coef")
-
+    formula = models.CharField(max_length=255, default="courses + td + tp")
+    coef=""
     def __str__(self):
         return self.formula
 
@@ -11,11 +11,11 @@ class Professor(models.Model):
     name = models.CharField(max_length=255)
     department = models.CharField(max_length=255)
     grade = models.CharField(max_length=255)
-    courses = models.FloatField(default=0)
-    td = models.FloatField(default=0)
-    tp = models.FloatField(default=0)
-    coef = models.FloatField(default=0)
-    max_surveillance_hours = models.FloatField(default=0)
+    courses = models.FloatField(default=0, null=True, blank=True)  # Allow NULL values
+    td = models.FloatField(default=0, null=True, blank=True)       # Allow NULL values
+    tp = models.FloatField(default=0, null=True, blank=True)       # Allow NULL values
+    coef = models.FloatField(default=0, null=True, blank=True)     # Allow NULL values
+    max_surveillance_hours = models.FloatField(default=0, null=True, blank=True)  # Allow NULL values
     available = models.BooleanField(default=True)
 
     def __str__(self):

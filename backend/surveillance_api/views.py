@@ -11,7 +11,6 @@ from .models import Professor, Session, Formula
 from .serializers import ProfessorSerializer, SessionSerializer
 from .utils import calculate_max_hours
 
-
 class UploadExcelView(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser]
@@ -23,6 +22,11 @@ class UploadExcelView(APIView):
 
         try:
             df = pd.read_excel(file)
+
+            # Replace NaN or missing values with 0 for numeric columns
+            numeric_columns = ["Cours", "TD", "TP", "coef"]
+            df[numeric_columns] = df[numeric_columns].fillna(0)
+
             for _, row in df.iterrows():
                 Professor.objects.create(
                     name=row["Nom Et Prénom Enseignant"],
