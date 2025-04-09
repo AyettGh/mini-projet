@@ -1,5 +1,6 @@
 import pandas as pd
 from itertools import combinations
+<<<<<<< HEAD
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -10,11 +11,22 @@ from rest_framework.parsers import MultiPartParser
 
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+=======
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Professor, Session
 from .utils import calculate_max_hours
 
+<<<<<<< HEAD
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -27,6 +39,12 @@ from .serializers import LoginSerializer
 def index(request):
     professors = Professor.objects.all()
     sessions = Session.objects.all()
+=======
+
+def index(request):
+    professors = Professor.objects.all()  # Retrieve all professors
+    sessions = Session.objects.all()  # Retrieve all sessions
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
     context = {
         'professors': professors,
         'sessions': sessions,
@@ -34,9 +52,16 @@ def index(request):
     return render(request, 'surveillance_api/index.html', context)
 
 
+<<<<<<< HEAD
 class UploadExcelView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+=======
+# API view to upload an Excel file
+class UploadExcelView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]  # Use JWT Authentication
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
     parser_classes = [MultiPartParser]
 
     def post(self, request):
@@ -64,14 +89,26 @@ class UploadExcelView(APIView):
                     max_surveillance_hours=calculate_max_hours(row),
                     available=True,
                 )
+<<<<<<< HEAD
             return redirect('surveillance_api:success')
+=======
+            return redirect('surveillance_api:success')  # Redirect to success page after upload
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
 
+<<<<<<< HEAD
 class UpdateAvailabilityView(APIView):
     permission_classes = [IsAuthenticated]
 
+=======
+# API view to update the availability of professors
+class UpdateAvailabilityView(APIView):
+    permission_classes = [IsAuthenticated]
+
+
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
     def post(self, request):
         professor_id = request.data.get("id")
         available = request.data.get("available")
@@ -85,6 +122,10 @@ class UpdateAvailabilityView(APIView):
             return Response({"error": "Professor not found"}, status=404)
 
 
+<<<<<<< HEAD
+=======
+# API view to assign sessions to professors
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
 class AssignSessionsView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -116,6 +157,10 @@ class AssignSessionsView(APIView):
         return Response({"message": "Sessions assigned successfully!"}, status=200)
 
 
+<<<<<<< HEAD
+=======
+# API view to generate a PDF schedule of sessions
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
 class GeneratePDFView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -141,6 +186,7 @@ class GeneratePDFView(APIView):
 
         p.save()
         return response
+<<<<<<< HEAD
 
 
 class SignUpView(APIView):
@@ -165,3 +211,5 @@ class LoginView(APIView):
                 'refresh': str(refresh)
             })
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+=======
+>>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
