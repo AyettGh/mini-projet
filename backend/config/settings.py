@@ -17,12 +17,9 @@ INSTALLED_APPS = [
     'corsheaders',  # Enable CORS
     'rest_framework',  # DRF
     'rest_framework_simplejwt',  # JWT authentication
-<<<<<<< HEAD
     'surveillance_api',
     'rest_framework.authtoken'# Main app
-=======
     'surveillance_api',  # Main app
->>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
 ]
 
 MIDDLEWARE = [
@@ -88,12 +85,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-<<<<<<< HEAD
         'rest_framework.permissions.IsAuthenticated',
         #'rest_framework.permissions.AllowAny',
-=======
+
         'rest_framework.permissions.IsAuthenticated',  # Require authentication by default
->>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
+
     ),
 }
 
@@ -101,7 +97,3 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> d968a2574d3a78eb777d428b9fce10c5cae2e480
