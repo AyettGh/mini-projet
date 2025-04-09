@@ -87,6 +87,14 @@ class GeneratePDFView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        # Step 1: Query all sessions
+        sessions = Session.objects.all()
+
+        # Step 2: Check if sessions exist
+        if not sessions.exists():
+            return HttpResponse("No sessions found!", status=404)
+
+        # Step 3: Generate PDF
         response = HttpResponse(content_type="application/pdf")
         response["Content-Disposition"] = 'attachment; filename="surveillance_schedule.pdf"'
 
@@ -94,7 +102,6 @@ class GeneratePDFView(APIView):
         p.setFont("Helvetica", 12)
 
         y = 750
-        sessions = Session.objects.all()
         for session in sessions:
             p.drawString(50, y, f"Session: {session.session_id}, Date: {session.date}, Time: {session.time}")
             p.drawString(50, y - 20, f"Professors: {session.professor_1}, {session.professor_2}")
