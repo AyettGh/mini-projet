@@ -27,6 +27,7 @@ from .models import Professor, Session
 from .utils import calculate_max_hours
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 from rest_framework import status
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -53,6 +54,8 @@ def index(request):
 
 
 <<<<<<< HEAD
+=======
+>>>>>>> 4a04a29dd8e8ed24a3f757d5564cfb98af3520ea
 class UploadExcelView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -71,11 +74,18 @@ class UploadExcelView(APIView):
 
         try:
             df = pd.read_excel(file)
+<<<<<<< HEAD
             required_columns = ["Nom Et Prénom Enseignant", "Département", "Grade", "Cours", "TD", "TP", "coef"]
             missing_columns = [col for col in required_columns if col not in df.columns]
 
             if missing_columns:
                 return Response({"error": f"Missing columns: {', '.join(missing_columns)}"}, status=400)
+=======
+
+            # Replace NaN or missing values with 0 for numeric columns
+            numeric_columns = ["Cours", "TD", "TP", "coef"]
+            df[numeric_columns] = df[numeric_columns].fillna(0)
+>>>>>>> 4a04a29dd8e8ed24a3f757d5564cfb98af3520ea
 
             for _, row in df.iterrows():
                 Professor.objects.create(
@@ -165,10 +175,21 @@ class GeneratePDFView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+<<<<<<< HEAD
         sessions = Session.objects.all()
         if not sessions.exists():
             return Response({"error": "No sessions found"}, status=404)
 
+=======
+        # Step 1: Query all sessions
+        sessions = Session.objects.all()
+
+        # Step 2: Check if sessions exist
+        if not sessions.exists():
+            return HttpResponse("No sessions found!", status=404)
+
+        # Step 3: Generate PDF
+>>>>>>> 4a04a29dd8e8ed24a3f757d5564cfb98af3520ea
         response = HttpResponse(content_type="application/pdf")
         response["Content-Disposition"] = 'attachment; filename="surveillance_schedule.pdf"'
 
